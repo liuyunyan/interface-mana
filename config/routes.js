@@ -50,16 +50,46 @@ export default [
                 ],
               },
               {
-                name: 'list.table-list',
-                icon: 'table',
-                path: '/list',
-                component: './TableList',
-              },
+                  name: 'sql.interface-mana',
+                  icon: 'BoxPlot',
+                  path: '/interface',
+                  component: './InterfaceMana',
+                },
+              // {
+              //   name: 'list.table-list',
+              //   icon: 'table',
+              //   path: '/list',
+              //   component: './TableList',
+              // },
               {
                 name: 'sql.sql-edit',
                 icon: 'ConsoleSql',
                 path: '/sql',
                 component: './SqlEdit',
+              },{
+                name: 'sql.source-mana',
+                icon: 'Form',
+                path: '/source',
+                component: './SourceMana',
+              },
+              {
+                name: 'sql.system-mana',
+                icon: 'table',
+                path: '/system',
+                // component: './SystemMana',
+                routes: [
+                  {
+                    path: '/system/user',
+                    name: 'user-mana',
+                    icon: 'User',
+                    component: './SystemMana/UserMana',
+                  },
+                  {
+                    path: '/system/third',
+                    name: 'third-mana',
+                    component: './SystemMana/ThirdMana',
+                  },
+                ],
               },
               {
                 component: './404',

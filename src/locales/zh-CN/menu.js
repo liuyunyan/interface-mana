@@ -49,4 +49,10 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+  'menu.sql.interface-mana': '接口管理',
+  'menu.sql.sql-edit': 'Sql编辑器',
+  'menu.sql.source-mana': '数据源管理',
+  'menu.sql.system-mana': '系统管理',
+  'menu.sql.system-mana.third-mana': '三方系统管理',
+  'menu.sql.system-mana.user-mana': '用户管理',
 };
