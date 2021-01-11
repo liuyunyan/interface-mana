@@ -284,7 +284,7 @@ const TableList = () => {
       <ModalForm
         title={intl.formatMessage({
           id: 'pages.searchTable.createForm.newRule',
-          defaultMessage: '新建规则',
+          defaultMessage: '新增',
         })}
         width="400px"
         visible={createModalVisible}

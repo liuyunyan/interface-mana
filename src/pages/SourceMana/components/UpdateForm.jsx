@@ -27,7 +27,7 @@ const UpdateForm = (props) => {
             destroyOnClose
             title={intl.formatMessage({
               id: 'pages.searchTable.updateForm.ruleConfig',
-              defaultMessage: '规则配置',
+              defaultMessage: '数据源',
             })}
             visible={props.updateModalVisible}
             footer={submitter}

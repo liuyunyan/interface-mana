@@ -29,7 +29,7 @@ export default {
   'pages.admin.subPage.title': 'Halaman ini hanya dapat dilihat oleh admin',
   'pages.admin.subPage.alertMessage':
     'umi ui telah dirilis, silahkan gunakan npm run ui untuk memulai pengalaman.',
-  'pages.searchTable.createForm.newRule': 'Aturan baru',
+  'pages.searchTable.createForm.newRule': 'Aturan',
   'pages.searchTable.updateForm.ruleConfig': 'Konfigurasi aturan',
   'pages.searchTable.updateForm.basicConfig': 'Informasi dasar',
   'pages.searchTable.updateForm.ruleName.nameLabel': 'Nama aturan',
