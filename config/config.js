@@ -40,8 +40,4 @@ export default defineConfig({
     basePath: '/',
   },
   esbuild: {},
-  scripts: [
-    `@/assets/js/ace.js`,
-    `@/assets/js/ext-searchbox.js`,
-  ],
 });

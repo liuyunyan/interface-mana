@@ -3,76 +3,102 @@ import { Button, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
+import { queryRule, updateRule, addRule, removeRule } from './service';
 
 export type TableListItem = {
-  key: number;
+  id: number;
   name: string;
-  creator: string;
-  createdAt: number;
+  type: string;
+  ip: string;
+  port: number;
+  username: string;
+  password: string;
+  dbName: string;
+  mark: string;
 };
+//{
+//   "id": 5,
+//   "name": "datasource1",
+//   "type": "MYSQL",
+//   "ip": "39.105.90.208",
+//   "port": 13306,
+//   "username": "root",
+//   "password": "passwd",
+//   "dbName": "test",
+//   "mark": null
+// }
 const tableListDataSource: TableListItem[] = [];
 
-const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
+// for (let i = 0; i < 5; i += 1) {
+//   tableListDataSource.push({
+//     key: i,
+//     name: 'AppName',
+//     creator: creators[Math.floor(Math.random() * creators.length)],
+//     createdAt: Date.now() - Math.floor(Math.random() * 100000),
+//   });
+// }
 
-for (let i = 0; i < 5; i += 1) {
-  tableListDataSource.push({
-    key: i,
-    name: 'AppName',
-    creator: creators[Math.floor(Math.random() * creators.length)],
-    createdAt: Date.now() - Math.floor(Math.random() * 100000),
-  });
-}
+
+/**
+ *  删除节点
+ * @param selectedRows
+ */
+
+const handleRemove = async (selectedRows) => {
+  const hide = message.loading('正在删除');
+  if (!selectedRows) return true;
+
+  try {
+    await removeRule({
+      key: selectedRows.map((row) => row.key),
+    });
+    hide();
+    message.success('删除成功，即将刷新');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('删除失败，请重试');
+    return false;
+  }
+};
 
 const columns: ProColumns<TableListItem>[] = [
   {
-    title: '应用名称',
+    title: '数据源名称',
     dataIndex: 'name',
-    render: (_) => <a>{_}</a>,
+    // render: (_) => <a>{_}</a>,
   },
   {
-    title: '创建者',
-    dataIndex: 'creator',
-    valueType: 'select',
-    valueEnum: {
-      all: { text: '全部' },
-      付小小: { text: '付小小' },
-      曲丽丽: { text: '曲丽丽' },
-      林东东: { text: '林东东' },
-      陈帅帅: { text: '陈帅帅' },
-      兼某某: { text: '兼某某' },
-    },
+    title: '数据库类型',
+    dataIndex: 'type',
   },
   {
-    title: (
-      <>
-        创建时间
-        <Tooltip placement="top" title="这是一段描述">
-          <QuestionCircleOutlined style={{ marginLeft: 4 }} />
-        </Tooltip>
-      </>
-    ),
-    key: 'since',
-    dataIndex: 'createdAt',
-    valueType: 'date',
-    sorter: (a, b) => a.createdAt - b.createdAt,
+    title: '地址',
+    dataIndex: 'ip',
+  },
+  {
+    title: '端口',
+    dataIndex: 'port',
+  },
+  {
+    title: '登录账号',
+    dataIndex: 'username',
+  },
+  {
+    title: '备注',
+    dataIndex: 'mark',
   },
   {
     title: '操作',
     width: '164px',
     key: 'option',
     valueType: 'option',
-    render: () => [
-      <a key="link">链路</a>,
-      <a key="link2">报警</a>,
-      <a key="link3">监控</a>,
-      <TableDropdown
-        key="actionGroup"
-        menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
-        ]}
-      />,
-    ],
+    render: () => [<a key="link" >编辑</a>, <a key="link2"
+    onClick={async () => {
+              await handleRemove('selectedRowsState');
+              // actionRef.current?.reloadAndRest?.();
+            }}
+    >删除</a>],
   },
 ];
 
@@ -80,15 +106,17 @@ export default () => {
   return (
     <ProTable<TableListItem>
       columns={columns}
-      request={(params, sorter, filter) => {
-        // 表单搜索项会从 params 传入，传递给后端接口。
-        console.log(params, sorter, filter);
-        return Promise.resolve({
-          data: tableListDataSource,
-          success: true,
-        });
-      }}
-      rowKey="key"
+      request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
+      // request={
+      //   (params, sorter, filter) => {
+      //   // 表单搜索项会从 params 传入，传递给后端接口。
+      //   console.log(params, sorter, filter);
+      //   return Promise.resolve({
+      //     data: tableListDataSource,
+      //     success: true,
+      //   });
+      // }}
+      rowKey="id"
       pagination={{
         showQuickJumper: true,
       }}
